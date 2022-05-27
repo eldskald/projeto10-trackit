@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 import logo from "../assets/logo.png";
 
+import UserContext from "../shared/UserContext";
 import { TextInput, LongButton, LinkButton } from "../shared/InputTypes";
 import ErrorMessage from "../shared/ErrorMessage";
 
@@ -18,6 +19,7 @@ export default function Home () {
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
+    const { user, setUser } = useContext(UserContext);
 
     function signIn () {
         if (loading) {
@@ -31,7 +33,15 @@ export default function Home () {
         };
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", data)
             .then(response => {
-                console.log(response.data);
+                setUser({
+                    id: response.data.id,
+                    name: response.data.name,
+                    image: response.data.image,
+                    email: response.data.email,
+                    password: response.data.password,
+                    token: response.data.token
+                });
+                setErrorMessage("Foi!");
                 setLoading("");
             })
             .catch(error => {
