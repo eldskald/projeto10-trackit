@@ -1,0 +1,23 @@
+
+:root {
+    --displayfont: "Playball", cursive;
+    --scriptfont: "Lexend Deca", sans-serif;
+    --maincolor: #52b6ff;
+    --scriptcolor: #666666;
+    --sec1color: #126ba5;
+    --sec2color: #dbdbdb;
+    --bgcolor: #e5e5e5;
+    --divcolor: #ffffff;
+    --donecolor: #8fc549;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: var(--scriptfont);
+    color: var(--scriptcolor);
+    font-weight: 400;
+}
+
+body {
+    background-color: var(--bgcolor);
+}
