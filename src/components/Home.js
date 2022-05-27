@@ -32,8 +32,7 @@ export default function Home () {
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", data)
             .then(response => {
                 setUser({...response.data});
-                setErrorMessage("Foi!");
-                setLoading("");
+                navigate("/habitos");
             })
             .catch(error => {
                 setErrorMessage(error.response.data.message);

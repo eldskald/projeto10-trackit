@@ -5,6 +5,7 @@ import UserContext from "../shared/UserContext"
 
 import Home from "./Home";
 import SignUp from "./SignUp";
+import Habits from "./Habits";
 
 export default function App () {
 
@@ -16,6 +17,7 @@ export default function App () {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/cadastro" element={<SignUp />} />
+                    <Route path="/habitos" element={<Habits />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
