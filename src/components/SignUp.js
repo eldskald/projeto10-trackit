@@ -9,17 +9,19 @@ import logo from "../assets/logo.png";
 import { TextInput, LongButton, LinkButton } from "../shared/InputTypes";
 import ErrorMessage from "../shared/ErrorMessage";
 
-export default function Home () {
+export default function SignUp () {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [pictureURL, setPictureURL] = useState("");
 
     const [loading, setLoading] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
 
-    function signIn () {
+    function signUp () {
         if (loading) {
             return;
         }
@@ -27,13 +29,12 @@ export default function Home () {
         setLoading("loading");
         const data = {
             email: email,
+            name: name,
+            image: pictureURL,
             password: password
         };
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", data)
-            .then(response => {
-                console.log(response.data);
-                setLoading("");
-            })
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", data)
+            .then(() => {navigate("/")})
             .catch(error => {
                 setErrorMessage(error.response.data.message);
                 setLoading("");
@@ -61,12 +62,28 @@ export default function Home () {
                 disabled={loading}
                 loading={loading}
             />
-            <LongButton loading={loading} onClick={() => signIn()}>
-                {loading ? <ThreeDots color="var(--divcolor)" /> : "Entra"}
+            <TextInput
+                type="text"
+                placeholder="nome"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                disabled={loading}
+                loading={loading}
+            />
+            <TextInput
+                type="url"
+                placeholder="foto"
+                value={pictureURL}
+                onChange={e => setPictureURL(e.target.value)}
+                disabled={loading}
+                loading={loading}
+            />
+            <LongButton loading={loading} onClick={() => signUp()}>
+                {loading ? <ThreeDots color="var(--divcolor)" /> : "Cadastrar"}
             </LongButton>
             <ErrorMessage error={errorMessage} />
-            <LinkButton onClick={() => {navigate("/cadastro")}}>
-                Não tem uma conta? Cadastre-se!
+            <LinkButton onClick={() => navigate("/")}>
+                Já tem uma conta? Faça login!
             </LinkButton>
         </Container>
     );
@@ -86,3 +103,4 @@ const Container = styled.div`
 const Spacer = styled.div`
     height: ${props => props.length};
 `;
+
