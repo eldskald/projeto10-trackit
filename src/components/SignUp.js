@@ -21,10 +21,8 @@ export default function SignUp () {
 
     const navigate = useNavigate();
 
-    function signUp () {
-        if (loading) {
-            return;
-        }
+    function signUp (event) {
+        event.preventDefault();
 
         setLoading("loading");
         const data = {
@@ -46,41 +44,43 @@ export default function SignUp () {
             <Spacer length="10%" />
             <img src={logo} alt="TrackIt Logo" />
             <Spacer length="4%" />
-            <TextInput
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                disabled={loading}
-                loading={loading}
-            />
-            <TextInput
-                type="password"
-                placeholder="senha"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                disabled={loading}
-                loading={loading}
-            />
-            <TextInput
-                type="text"
-                placeholder="nome"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                disabled={loading}
-                loading={loading}
-            />
-            <TextInput
-                type="url"
-                placeholder="foto"
-                value={pictureURL}
-                onChange={e => setPictureURL(e.target.value)}
-                disabled={loading}
-                loading={loading}
-            />
-            <LongButton loading={loading} onClick={() => signUp()}>
-                {loading ? <ThreeDots color="var(--divcolor)" /> : "Cadastrar"}
-            </LongButton>
+            <Form onSubmit={signUp}>
+                <TextInput
+                    type="email"
+                    placeholder="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    disabled={loading}
+                    loading={loading}
+                />
+                <TextInput
+                    type="password"
+                    placeholder="senha"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    disabled={loading}
+                    loading={loading}
+                />
+                <TextInput
+                    type="text"
+                    placeholder="nome"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    disabled={loading}
+                    loading={loading}
+                />
+                <TextInput
+                    type="url"
+                    placeholder="foto"
+                    value={pictureURL}
+                    onChange={e => setPictureURL(e.target.value)}
+                    disabled={loading}
+                    loading={loading}
+                />
+                <LongButton loading={loading} disabled={loading} type="submit">
+                    {loading ? <ThreeDots color="var(--divcolor)" /> : "Cadastrar"}
+                </LongButton>
+            </Form>
             <ErrorMessage error={errorMessage} />
             <LinkButton onClick={() => navigate("/")}>
                 Já tem uma conta? Faça login!
@@ -104,3 +104,8 @@ const Spacer = styled.div`
     height: ${props => props.length};
 `;
 
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;

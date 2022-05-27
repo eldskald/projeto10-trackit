@@ -19,12 +19,10 @@ export default function Home () {
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
-    function signIn () {
-        if (loading) {
-            return;
-        }
+    function signIn (event) {
+        event.preventDefault();
 
         setLoading("loading");
         const data = {
@@ -33,14 +31,7 @@ export default function Home () {
         };
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", data)
             .then(response => {
-                setUser({
-                    id: response.data.id,
-                    name: response.data.name,
-                    image: response.data.image,
-                    email: response.data.email,
-                    password: response.data.password,
-                    token: response.data.token
-                });
+                setUser({...response.data});
                 setErrorMessage("Foi!");
                 setLoading("");
             })
@@ -55,25 +46,27 @@ export default function Home () {
             <Spacer length="10%" />
             <img src={logo} alt="TrackIt Logo" />
             <Spacer length="4%" />
-            <TextInput
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                disabled={loading}
-                loading={loading}
-            />
-            <TextInput
-                type="password"
-                placeholder="senha"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                disabled={loading}
-                loading={loading}
-            />
-            <LongButton loading={loading} onClick={() => signIn()}>
-                {loading ? <ThreeDots color="var(--divcolor)" /> : "Entra"}
-            </LongButton>
+            <Form onSubmit={signIn}>
+                <TextInput
+                    type="email"
+                    placeholder="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    disabled={loading}
+                    loading={loading}
+                />
+                <TextInput
+                    type="password"
+                    placeholder="senha"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    disabled={loading}
+                    loading={loading}
+                />
+                <LongButton loading={loading} disabled={loading} type="submit">
+                    {loading ? <ThreeDots color="var(--divcolor)" /> : "Entra"}
+                </LongButton>
+            </Form>
             <ErrorMessage error={errorMessage} />
             <LinkButton onClick={() => {navigate("/cadastro")}}>
                 Não tem uma conta? Cadastre-se!
@@ -95,4 +88,10 @@ const Container = styled.div`
 
 const Spacer = styled.div`
     height: ${props => props.length};
+`;
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
