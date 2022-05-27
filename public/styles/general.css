@@ -9,6 +9,7 @@
     --bgcolor: #e5e5e5;
     --divcolor: #ffffff;
     --donecolor: #8fc549;
+    --errorcolor: #e75766;
 }
 
 * {
@@ -20,4 +21,12 @@
 
 body {
     background-color: var(--bgcolor);
+}
+
+.root {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
 }
