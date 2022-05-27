@@ -15,13 +15,18 @@ export default function Header () {
         setMenu(menu ? "" : "menu");
     }
 
+    function logout () {
+        localStorage.clear();
+        navigate("/");
+    }
+
     return (
         <Container>
             <h1>TrackIt</h1>
             <img src={user.image} alt="Foto do usuário" onClick={toggleMenu} />
             {menu ? (
                 <DropdownMenu onMouseLeave={toggleMenu}>
-                    <p onClick={() => navigate("/")}>Sair</p>
+                    <p onClick={logout}>Sair</p>
                 </DropdownMenu>
             ) : (
                 <></>
@@ -74,7 +79,6 @@ const DropdownMenu = styled.div`
     padding: 8px 12px;
 
     background-color: var(--divcolor);
-    box-shadow: 0px 0px 4px #a2a2a2;
     border: 1px solid transparent;
     border-radius: 4px;
 

@@ -16,15 +16,15 @@ export default function SignUp () {
     const [name, setName] = useState("");
     const [pictureURL, setPictureURL] = useState("");
 
-    const [loading, setLoading] = useState("");
+    const [submitting, setSubmitting] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
 
-    function signUp (event) {
+    function handleSubmit (event) {
         event.preventDefault();
 
-        setLoading("loading");
+        setSubmitting("loading");
         const data = {
             email: email,
             name: name,
@@ -35,7 +35,7 @@ export default function SignUp () {
             .then(() => {navigate("/")})
             .catch(error => {
                 setErrorMessage(error.response.data.message);
-                setLoading("");
+                setSubmitting("");
             });
     }
 
@@ -44,41 +44,41 @@ export default function SignUp () {
             <Spacer length="10%" />
             <img src={logo} alt="TrackIt Logo" />
             <Spacer length="4%" />
-            <Form onSubmit={signUp}>
+            <Form onSubmit={handleSubmit}>
                 <TextInput
                     type="email"
                     placeholder="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    disabled={loading}
-                    loading={loading}
+                    disabled={submitting}
+                    loading={submitting}
                 />
                 <TextInput
                     type="password"
                     placeholder="senha"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    disabled={loading}
-                    loading={loading}
+                    disabled={submitting}
+                    loading={submitting}
                 />
                 <TextInput
                     type="text"
                     placeholder="nome"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    disabled={loading}
-                    loading={loading}
+                    disabled={submitting}
+                    loading={submitting}
                 />
                 <TextInput
                     type="url"
                     placeholder="foto"
                     value={pictureURL}
                     onChange={e => setPictureURL(e.target.value)}
-                    disabled={loading}
-                    loading={loading}
+                    disabled={submitting}
+                    loading={submitting}
                 />
-                <LongButton loading={loading} disabled={loading} type="submit">
-                    {loading ? <ThreeDots color="var(--divcolor)" /> : "Cadastrar"}
+                <LongButton loading={submitting} disabled={submitting} type="submit">
+                    {submitting ? <ThreeDots color="var(--divcolor)" /> : "Cadastrar"}
                 </LongButton>
             </Form>
             <ErrorMessage error={errorMessage} />
