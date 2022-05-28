@@ -2,13 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { RotatingLines, ThreeDots } from "react-loader-spinner";
+import { RotatingLines } from "react-loader-spinner";
 
 import UserContext from "../shared/UserContext";
 import ErrorMessage from "../shared/ErrorMessage";
 
 import Header from "./Header";
 import Menu from "./Menu";
+import AddHabitMenu from "./AddHabitMenu";
 
 export default function Habits () {
 
@@ -58,8 +59,15 @@ export default function Habits () {
                 <HabitsTop>
                     <TitleAndAddButton>
                         <h1>Meus hábitos</h1>
-                        <button><ion-icon name="add-outline"></ion-icon></button>
+                        <button onClick={() => setAddingHabit("true")}>
+                            <ion-icon name="add-outline"></ion-icon>
+                        </button>
                     </TitleAndAddButton>
+                    {addingHabit ? (
+                        <AddHabitMenu close={() => setAddingHabit("")} />
+                    ) : (
+                        <></>
+                    )}
                     {habits.length === 0 ? (
                         <NoHabitsText>
                             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
