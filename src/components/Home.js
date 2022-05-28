@@ -67,9 +67,7 @@ export default function Home () {
                     disabled={submitting}
                     loading={submitting}
                 />
-                <LongButton loading={submitting} disabled={submitting} type="submit">
-                    {submitting ? <ThreeDots color="var(--divcolor)" /> : "Entra"}
-                </LongButton>
+                <LongButton text="Entrar" loading={submitting} type="submit" />
             </Form>
             <ErrorMessage error={errorMessage} />
             <LinkButton onClick={() => {navigate("/cadastro")}}>

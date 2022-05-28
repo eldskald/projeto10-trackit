@@ -1,4 +1,6 @@
+import React from "react";
 import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
 
 export const TextInput = styled.input`
     width: 300px;
@@ -19,7 +21,19 @@ export const TextInput = styled.input`
     }
 `;
 
-export const LongButton = styled.button`
+export function LongButton ({ text, loading }) {
+    return (
+        <LongButtonStyle loading={loading} disabled={loading}>
+            {loading ? (
+                <ThreeDots color="var(--divcolor)" />
+            ) : (
+                text
+            )}
+        </LongButtonStyle>
+    );
+}
+
+const LongButtonStyle = styled.button`
     width: 300px;
     height: 42px;
     margin: 4px;

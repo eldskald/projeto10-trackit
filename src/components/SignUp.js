@@ -77,9 +77,7 @@ export default function SignUp () {
                     disabled={submitting}
                     loading={submitting}
                 />
-                <LongButton loading={submitting} disabled={submitting} type="submit">
-                    {submitting ? <ThreeDots color="var(--divcolor)" /> : "Cadastrar"}
-                </LongButton>
+                <LongButton text="Cadastrar" loading={submitting} type="submit" />
             </Form>
             <ErrorMessage error={errorMessage} />
             <LinkButton onClick={() => navigate("/")}>
