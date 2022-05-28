@@ -7,6 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../shared/UserContext";
 
 import Header from "./Header";
+import Menu from "./Menu";
 
 export default function Habits () {
 
@@ -15,6 +16,7 @@ export default function Habits () {
     return (
         <>
             <Header />
+            <Menu />
         </>
     );
 }
