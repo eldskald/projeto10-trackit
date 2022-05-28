@@ -9,7 +9,7 @@ export default function Header () {
     const [menu, setMenu] = useState("");
 
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     function toggleMenu () {
         setMenu(menu ? "" : "menu");
@@ -17,6 +17,7 @@ export default function Header () {
 
     function logout () {
         localStorage.clear();
+        setUser({});
         navigate("/");
     }
 
@@ -26,6 +27,7 @@ export default function Header () {
             <img src={user.image} alt="Foto do usuário" onClick={toggleMenu} />
             {menu ? (
                 <DropdownMenu onMouseLeave={toggleMenu}>
+                    <h1>{user.name}</h1>
                     <p onClick={logout}>Sair</p>
                 </DropdownMenu>
             ) : (
@@ -72,8 +74,8 @@ const DropdownMenu = styled.div`
     position: absolute;
     top: 28px;
     right: 28px;
-    width: 96px;
-    height: 32px;
+    width: 160px;
+    height: 64px;
     z-index: 2;
 
     padding: 8px 12px;
@@ -81,6 +83,16 @@ const DropdownMenu = styled.div`
     background-color: var(--divcolor);
     border: 1px solid transparent;
     border-radius: 4px;
+
+    h1 {
+        margin-bottom: 8px;
+
+        border-bottom: 1px solid var(--scriptcolor);
+
+        font-family: var(--scriptfont);
+        font-size: 16px;
+        color: var(--scriptcolor);
+    }
 
     p {
         font-family: var(--scriptfont);

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import UserContext from "../shared/UserContext"
 
+import StorageReader from "./StorageReader";
 import Home from "./Home";
 import SignUp from "./SignUp";
 import Habits from "./Habits";
@@ -14,6 +15,7 @@ export default function App () {
     return (
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
+                <StorageReader />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/cadastro" element={<SignUp />} />
@@ -23,3 +25,5 @@ export default function App () {
         </UserContext.Provider>
     );
 }
+
+
