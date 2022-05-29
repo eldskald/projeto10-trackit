@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 
 import UserContext from "../shared/UserContext";
@@ -7,6 +6,7 @@ import UserContext from "../shared/UserContext";
 import Header from "./Header";
 import Menu from "./Menu";
 import AddHabitMenu from "./AddHabitMenu";
+import Habit from "./Habit";
 
 export default function Habits () {
 
@@ -16,7 +16,6 @@ export default function Habits () {
         false, false, false, false, false, false, false
     ]);
 
-    const navigate = useNavigate();
     const { habits } = useContext(UserContext);
 
     return (
@@ -46,7 +45,14 @@ export default function Habits () {
                             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                         </NoHabitsText>
                     ) : (
-                        <></>
+                        <>
+                            {habits.map(habit => <Habit
+                                key={habit.id}
+                                id={habit.id}
+                                name={habit.name}
+                                days={habit.days}
+                            />)}
+                        </>
                     )}
                 </HabitsTop>
             </Container>
@@ -65,6 +71,7 @@ const Container = styled.div`
     padding: 32px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 `;
 
 const HabitsTop = styled.div`
@@ -74,6 +81,7 @@ const HabitsTop = styled.div`
 const TitleAndAddButton = styled.div`
     width: 100%;
     height: 36px;
+    margin-bottom: 16px;
 
     display: flex;
     justify-content: space-between;

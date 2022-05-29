@@ -5,6 +5,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 import UserContext from "../shared/UserContext";
 import { TextInput } from "../shared/InputTypes";
+import { WeekdaysContainer, Weekday } from "../shared/HabitStyles";
 import ErrorMessage from "../shared/ErrorMessage";
 
 export default function AddHabitMenu ({
@@ -137,31 +138,6 @@ const Container = styled.div`
         justify-content: end;
         align-items: center;
     }
-`;
-
-const WeekdaysContainer = styled.div`
-    margin-top: 4px;
-
-    display: flex;
-`;
-
-const Weekday = styled.button`
-    width: 32px;
-    height: 32px;
-    margin-right: 4px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: 2px solid var(--sec2color);
-    border-radius: 4px;
-    background-color: ${props => props.pressed ? "var(--sec2color)" : "var(--divcolor)"};
-    cursor: pointer;
-
-    font-family: var(--scriptfont);
-    font-size: 20px;
-    color: ${props => props.pressed ? "var(--divcolor)" : "var(--sec2color)"};
 `;
 
 const Button = styled.button`

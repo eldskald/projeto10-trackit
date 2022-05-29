@@ -62,3 +62,13 @@ export const LinkButton = styled.div`
     color: var(--maincolor);
     text-decoration: underline;
 `;
+
+export const CancelButton = styled.div`
+    margin: 0px 16px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+    font-family: var(--scriptfont);
+    color: var(--maincolor);
+`;
