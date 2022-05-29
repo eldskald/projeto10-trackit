@@ -7,6 +7,7 @@ import ServerDataLoader from "./ServerDataLoader";
 import Home from "./Home";
 import SignUp from "./SignUp";
 import Habits from "./Habits";
+import Today from "./Today";
 
 export default function App () {
 
@@ -27,6 +28,7 @@ export default function App () {
                     <Route path="/" element={<Home />} />
                     <Route path="/cadastro" element={<SignUp />} />
                     <Route path="/habitos" element={<Habits />} />
+                    <Route path="/hoje" element={<Today />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>

@@ -36,7 +36,7 @@ export default function Menu () {
                             trailColor: "transparent"
                         })}
                     >
-                        <p>Hoje</p>
+                        <p onClick={() => navigate("/hoje")}>Hoje</p>
                     </CircularProgressbarWithChildren>
                 </div>
             </CircContainer>

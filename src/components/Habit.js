@@ -38,7 +38,6 @@ export default function Habit ({ id, name, days }) {
         )
             .then(() => {
                 reloadServerData();
-                setDeleting("");
             })
             .catch(() => {
                 setErrorMessage("Houve um erro!");

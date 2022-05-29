@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { TailSpin } from "react-loader-spinner";
+import { RotatingLines } from "react-loader-spinner";
 
 import UserContext from "../shared/UserContext";
 
@@ -13,9 +13,9 @@ export default function ServerDataLoader ({ reloader }) {
 
     const navigate = useNavigate();
     const { setUser, setHabits, setToday } = useContext(UserContext);
-    const storageData = localStorage.getItem("user");
 
     useEffect(() => {
+        const storageData = localStorage.getItem("user");
         if (storageData) {
             const data = JSON.parse(storageData);
             axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", data)
@@ -80,7 +80,7 @@ export default function ServerDataLoader ({ reloader }) {
     if (loadingHabits || loadingToday) {
         return (
             <SpinnerContainer>
-                <TailSpin color="var(--maincolor)" height="200" width="200" />
+                <RotatingLines strokeColor="var(--maincolor)" height="200" width="200" />
             </SpinnerContainer>
         );
     }
@@ -100,5 +100,5 @@ const SpinnerContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    background-color: var(--divcolor);
+    background-color: var(--bgcolor);
 `;

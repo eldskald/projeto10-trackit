@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 
 import UserContext from "../shared/UserContext";
-import { TextInput } from "../shared/InputTypes";
+import { TextInput, CancelButton } from "../shared/InputTypes";
 import { WeekdaysContainer, Weekday } from "../shared/HabitStyles";
 import ErrorMessage from "../shared/ErrorMessage";
 
@@ -52,6 +52,7 @@ export default function AddHabitMenu ({
                 setSubmitting("");
                 setName("");
                 setPressedWeekdays([false, false, false, false, false, false, false]);
+                close();
             })
             .catch(error => {
                 setErrorMessage(error.response.data.message);
@@ -158,14 +159,4 @@ const Button = styled.button`
     font-size: 16px;
     color: var(--divcolor);
     text-align: center;
-`;
-
-const CancelButton = styled.div`
-    margin: 0px 16px;
-
-    cursor: pointer;
-
-    font-size: 16px;
-    font-family: var(--scriptfont);
-    color: var(--maincolor);
 `;
