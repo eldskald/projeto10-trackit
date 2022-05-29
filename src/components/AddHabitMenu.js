@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
 
-import { TextInput, Button } from "../shared/InputTypes";
+import { TextInput } from "../shared/InputTypes";
 import ErrorMessage from "../shared/ErrorMessage";
 
 export default function AddHabitMenu ({ close }) {
@@ -15,11 +16,20 @@ export default function AddHabitMenu ({ close }) {
     const [submitting, setSubmitting] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    function getDays () {
+        let aux = pressedWeekdays.map((value, index) => value ? index : -1);
+        return aux.filter(value => value === -1 ? false : true);
+    }
+
     function handleWeekdayPress (num) {
         let aux = pressedWeekdays.map((value, index) => {
             return index === num ? !value : value;
         });
         setPressedWeekdays([...aux]);
+    }
+
+    function handleSubmit () {
+        console.log(getDays());
     }
 
     return (
@@ -44,7 +54,13 @@ export default function AddHabitMenu ({ close }) {
             <ErrorMessage error={errorMessage} />
             <div>
                 <CancelButton onClick={close}>Cancelar</CancelButton>
-                <Button text="Salvar" loading={submitting} />
+                <Button loading={submitting} disabled={submitting} onClick={handleSubmit}>
+                    {submitting ? (
+                        <ThreeDots color="var(--divcolor)" width="80px" />
+                    ) : (
+                        "Salvar"
+                    )}
+                </Button>
             </div>
         </Container>
     );
@@ -92,6 +108,26 @@ const Weekday = styled.button`
     font-family: var(--scriptfont);
     font-size: 20px;
     color: ${props => props.pressed ? "var(--divcolor)" : "var(--sec2color)"};
+`;
+
+const Button = styled.button`
+    height: 36px;
+    margin: 4px;
+
+    padding: 0px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: var(--maincolor);
+    cursor: ${props => props.loading ? "default" : "pointer"};
+    opacity: ${props => props.loading ? 0.4 : 1};
+
+    font-size: 16px;
+    color: var(--divcolor);
+    text-align: center;
 `;
 
 const CancelButton = styled.div`

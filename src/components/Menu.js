@@ -1,94 +1,45 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
-import { ThreeDots } from "react-loader-spinner";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 
 import UserContext from "../shared/UserContext";
-import ErrorMessage from "../shared/ErrorMessage";
 
 export default function Menu () {
 
-    const [daily, setDaily] = useState([]);
-    const [loadingDaily, setLoadingDaily] = useState("loading");
-    const [errorMessage, setErrorMessage] = useState("");
-
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
-
-    useEffect(() => {
-        if (Object.keys(user).length > 0) {
-            axios.get(
-                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
-                { headers: {
-                    Authorization: `Bearer ${user.token}`
-                }}
-            )
-                .then(response => {
-                    setDaily(response.data);
-                    setLoadingDaily("");
-                })
-                .catch(() => {
-                    setErrorMessage("Erro!");
-                    setLoadingDaily("");
-                });
-        }
-    }, [user]);
+    const { today } = useContext(UserContext);
 
     function getPercent () {
         let done = 0;
         let total = 0;
-        daily.forEach(habit => {
+        today.forEach(habit => {
             total++;
             done += habit.done ? 1 : 0;
         });
         return Math.round(done * 100 / total);
     }
 
-    function MidCircle () {
-        if (loadingDaily) {
-            return (
-                <CircContainer>
-                    <div>
-                        <ThreeDots
-                            color="var(--divcolor)"
-                            width="64px"
-                        />
-                    </div>
-                </CircContainer>
-            );
-        } else {
-            return (
-                <CircContainer>
-                    <div>
-                        {errorMessage ? (
-                            <ErrorMessage error={errorMessage} />
-                        ) : (
-                            <CircularProgressbarWithChildren
-                                value={getPercent()}
-                                background
-                                backgroundPadding={6}
-                                styles={buildStyles({
-                                    backgroundColor: "var(--maincolor)",
-                                    textColor: "var(--divcolor)",
-                                    pathColor: "var(--divcolor)",
-                                    strokeLinecap: "round",
-                                    trailColor: "transparent"
-                                })}
-                            >
-                                <p>Hoje</p>
-                            </CircularProgressbarWithChildren>
-                        )}
-                    </div>
-                </CircContainer>
-            );
-        }
-    }
-
     return (
         <>
-            <MidCircle />
+            <CircContainer>
+                <div>
+                    <CircularProgressbarWithChildren
+                        value={getPercent()}
+                        background
+                        backgroundPadding={6}
+                        styles={buildStyles({
+                            backgroundColor: "var(--maincolor)",
+                            textColor: "var(--divcolor)",
+                            pathColor: "var(--divcolor)",
+                            strokeLinecap: "round",
+                            trailColor: "transparent"
+                        })}
+                    >
+                        <p>Hoje</p>
+                    </CircularProgressbarWithChildren>
+                </div>
+            </CircContainer>
             <Container>
                 <p onClick={() => navigate("/habitos")}>
                     Hábitos

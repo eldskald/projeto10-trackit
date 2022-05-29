@@ -11,9 +11,11 @@ import Habits from "./Habits";
 export default function App () {
 
     const [user, setUser] = useState({});
+    const [habits, setHabits] = useState([]);
+    const [today, setToday] = useState([]);
 
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, habits, setHabits, today, setToday }}>
             <BrowserRouter>
                 <StorageReader />
                 <Routes>

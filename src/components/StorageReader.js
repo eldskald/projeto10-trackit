@@ -8,33 +8,76 @@ import UserContext from "../shared/UserContext";
 
 export default function StorageReader () {
 
-    const [loadingStorage, setLoadingStorage] = useState("loading");
-    const [loginError, setLoginError] = useState("");
+    const [loadingHabits, setLoadingHabits] = useState("loading");
+    const [loadingToday, setLoadingToday] = useState("loading");
 
     const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);
+    const { setUser, setHabits, setToday } = useContext(UserContext);
+    const storageData = localStorage.getItem("user");
 
     useEffect(() => {
-        const storageData = localStorage.getItem("user");
         if (storageData) {
             const data = JSON.parse(storageData);
             axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", data)
                 .then(response => {
                     setUser({...response.data});
-                    setLoadingStorage("");
+                    requestHabits(response.data.token);
+                    requestToday(response.data.token);
                 })
                 .catch(() => {
-                    storageData.clear();
-                    setLoadingStorage("");
+                    localStorage.clear();
+                    setLoadingHabits("");
+                    setLoadingToday("");
                     navigate("/", {replace: true});
                 });
         } else {
-            setLoadingStorage("");
+            setLoadingHabits("");
+            setLoadingToday("");
             navigate("/", {replace: true});
         }
     }, []);
+
+    function requestHabits (token) {
+        axios.get(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            {headers: {
+                Authorization: `Bearer ${token}`
+            }}
+        )
+            .then(response => {
+                setHabits([...response.data]);
+                setLoadingHabits("");
+            })
+            .catch(() => {
+                localStorage.clear();
+                setUser({});
+                setLoadingHabits("");
+                setLoadingToday("");
+                navigate("/", {replace: true});
+            });
+    }
+
+    function requestToday (token) {
+        axios.get(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+            {headers: {
+                Authorization: `Bearer ${token}`
+            }}
+        )
+            .then(response => {
+                setToday([...response.data]);
+                setLoadingToday("");
+            })
+            .catch(() => {
+                localStorage.clear();
+                setUser({});
+                setLoadingHabits("");
+                setLoadingToday("");
+                navigate("/", {replace: true});
+            });
+    }
     
-    if (loadingStorage) {
+    if (loadingHabits || loadingToday) {
         return (
             <SpinnerContainer>
                 <TailSpin color="var(--maincolor)" height="200" width="200" />

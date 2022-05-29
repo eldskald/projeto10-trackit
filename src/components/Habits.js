@@ -1,11 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
-import { RotatingLines } from "react-loader-spinner";
 
 import UserContext from "../shared/UserContext";
-import ErrorMessage from "../shared/ErrorMessage";
 
 import Header from "./Header";
 import Menu from "./Menu";
@@ -13,49 +10,15 @@ import AddHabitMenu from "./AddHabitMenu";
 
 export default function Habits () {
 
-    const [habits, setHabits] = useState([]);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [loadingHabits, setLoadingHabits] = useState("loading");
     const [addingHabit, setAddingHabit] = useState("");
 
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
-
-    useEffect(() => {
-        if (Object.keys(user).length > 0) {
-            axios.get(
-                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-                { headers: {
-                    Authorization: `Bearer ${user.token}`
-                }}
-            )
-                .then(response => {
-                    setHabits(response.data);
-                    setLoadingHabits("");
-                })
-                .catch(error => {
-                    setErrorMessage(error.response.data.message);
-                    setLoadingHabits("");
-                });
-        }
-    }, [user]);
-
-    if (loadingHabits) {
-        return (
-            <>
-                <Header />
-                <SpinnerContainer>
-                    <RotatingLines width="200" strokeColor="var(--maincolor)" />
-                </SpinnerContainer>
-            </>
-        );
-    }
+    const { habits } = useContext(UserContext);
 
     return (
         <>
             <Header />
             <Container>
-                <ErrorMessage error={errorMessage} />
                 <HabitsTop>
                     <TitleAndAddButton>
                         <h1>Meus hábitos</h1>
