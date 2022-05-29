@@ -77,7 +77,7 @@ const Container = styled.div`
 
 const CircContainer = styled.div`
     position: absolute;
-    bottom: 0px;
+    bottom: 16px;
     left: 0px;
     width: 100%;
 
@@ -88,7 +88,6 @@ const CircContainer = styled.div`
     div {
         width: 92px;
         height: 92px;
-        margin-bottom: 16px;
         z-index: 2;
 
         background-color: var(--maincolor);
