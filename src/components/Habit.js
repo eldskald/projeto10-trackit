@@ -96,7 +96,7 @@ const Container = styled.div`
         right: 8px;
 
         color: var(--scriptcolor);
-        font-size: 20px;
+        font-size: 32px;
         cursor: pointer;
     }
 
