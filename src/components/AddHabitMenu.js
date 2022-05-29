@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 
+import UserContext from "../shared/UserContext";
 import { TextInput } from "../shared/InputTypes";
 import ErrorMessage from "../shared/ErrorMessage";
 
-export default function AddHabitMenu ({ close }) {
+export default function AddHabitMenu ({
+    name, setName, pressedWeekdays, setPressedWeekdays, close
+}) {
 
-    const [name, setName] = useState("");
-    const [pressedWeekdays, setPressedWeekdays] = useState([
-        false, false, false, false, false, false, false
-    ]);
-    
     const [submitting, setSubmitting] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
+    const { user, reloadServerData } = useContext(UserContext);
 
     function getDays () {
         let aux = pressedWeekdays.map((value, index) => value ? index : -1);
@@ -29,7 +29,33 @@ export default function AddHabitMenu ({ close }) {
     }
 
     function handleSubmit () {
-        console.log(getDays());
+        const data = {
+            name: name,
+            days: getDays()
+        }
+        if (data.name === "" || data.days.length === 0) {
+            setErrorMessage("Escreva um nome e escolha dias!");
+            return;
+        }
+
+        setSubmitting("submitting");
+        axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            data,
+            {headers: {
+                Authorization: `Bearer ${user.token}`
+            }}
+        )
+            .then(() => {
+                reloadServerData();
+                setSubmitting("");
+                setName("");
+                setPressedWeekdays([false, false, false, false, false, false, false]);
+            })
+            .catch(error => {
+                setErrorMessage(error.response.data.message);
+                setSubmitting("");
+            });
     }
 
     return (
@@ -43,13 +69,41 @@ export default function AddHabitMenu ({ close }) {
                 loading={submitting}
             />
             <WeekdaysContainer>
-                <Weekday pressed={pressedWeekdays[0]} onClick={() => handleWeekdayPress(0)}>D</Weekday>
-                <Weekday pressed={pressedWeekdays[1]} onClick={() => handleWeekdayPress(1)}>S</Weekday>
-                <Weekday pressed={pressedWeekdays[2]} onClick={() => handleWeekdayPress(2)}>T</Weekday>
-                <Weekday pressed={pressedWeekdays[3]} onClick={() => handleWeekdayPress(3)}>Q</Weekday>
-                <Weekday pressed={pressedWeekdays[4]} onClick={() => handleWeekdayPress(4)}>Q</Weekday>
-                <Weekday pressed={pressedWeekdays[5]} onClick={() => handleWeekdayPress(5)}>S</Weekday>
-                <Weekday pressed={pressedWeekdays[6]} onClick={() => handleWeekdayPress(6)}>S</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[0]}
+                    onClick={() => handleWeekdayPress(0)}
+                    disabled={submitting}
+                >D</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[1]}
+                    onClick={() => handleWeekdayPress(1)}
+                    disabled={submitting}
+                >S</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[2]}
+                    onClick={() => handleWeekdayPress(2)}
+                    disabled={submitting}
+                >T</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[3]}
+                    onClick={() => handleWeekdayPress(3)}
+                    disabled={submitting}
+                >Q</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[4]}
+                    onClick={() => handleWeekdayPress(4)}
+                    disabled={submitting}
+                >Q</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[5]}
+                    onClick={() => handleWeekdayPress(5)}
+                    disabled={submitting}
+                >S</Weekday>
+                <Weekday
+                    pressed={pressedWeekdays[6]}
+                    onClick={() => handleWeekdayPress(6)}
+                    disabled={submitting}
+                >S</Weekday>
             </WeekdaysContainer>
             <ErrorMessage error={errorMessage} />
             <div>

@@ -6,7 +6,7 @@ import { TailSpin } from "react-loader-spinner";
 
 import UserContext from "../shared/UserContext";
 
-export default function StorageReader () {
+export default function ServerDataLoader ({ reloader }) {
 
     const [loadingHabits, setLoadingHabits] = useState("loading");
     const [loadingToday, setLoadingToday] = useState("loading");
@@ -35,7 +35,7 @@ export default function StorageReader () {
             setLoadingToday("");
             navigate("/", {replace: true});
         }
-    }, []);
+    }, [reloader]);
 
     function requestHabits (token) {
         axios.get(

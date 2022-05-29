@@ -11,6 +11,10 @@ import AddHabitMenu from "./AddHabitMenu";
 export default function Habits () {
 
     const [addingHabit, setAddingHabit] = useState("");
+    const [newHabitName, setNewHabitName] = useState("");
+    const [pressedWeekdays, setPressedWeekdays] = useState([
+        false, false, false, false, false, false, false
+    ]);
 
     const navigate = useNavigate();
     const { habits } = useContext(UserContext);
@@ -27,7 +31,13 @@ export default function Habits () {
                         </button>
                     </TitleAndAddButton>
                     {addingHabit ? (
-                        <AddHabitMenu close={() => setAddingHabit("")} />
+                        <AddHabitMenu
+                            name={newHabitName}
+                            setName={setNewHabitName}
+                            pressedWeekdays={pressedWeekdays}
+                            setPressedWeekdays={setPressedWeekdays}
+                            close={() => setAddingHabit("")}
+                        />
                     ) : (
                         <></>
                     )}
