@@ -18,7 +18,7 @@ export default function Home () {
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, reloadServerData } = useContext(UserContext);
 
     function handleSubmit (event) {
         event.preventDefault();
@@ -32,6 +32,7 @@ export default function Home () {
             .then(response => {
                 localStorage.setItem("user", JSON.stringify(data));
                 setUser({...response.data});
+                reloadServerData();
                 navigate("/habitos");
             })
             .catch(error => {

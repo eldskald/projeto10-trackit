@@ -26,7 +26,7 @@ export default function Menu () {
                 <p onClick={() => navigate("/habitos")}>
                     Hábitos
                 </p>
-                <p>
+                <p onClick={() => navigate("/historico")}>
                     Histórico
                 </p>
             </Container>

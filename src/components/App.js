@@ -8,12 +8,14 @@ import Home from "./Home";
 import SignUp from "./SignUp";
 import Habits from "./Habits";
 import Today from "./Today";
+import History from "./History";
 
 export default function App () {
 
     const [user, setUser] = useState({});
     const [habits, setHabits] = useState([]);
     const [today, setToday] = useState([]);
+    const [history, setHistory] = useState([]);
     const [reloader, setReloader] = useState(0);
 
     function reloadServerData () {
@@ -21,7 +23,9 @@ export default function App () {
     }
 
     return (
-        <UserContext.Provider value={{ user, setUser, habits, setHabits, today, setToday, reloadServerData }}>
+        <UserContext.Provider value={{
+            user, setUser, habits, setHabits, today, setToday, history, setHistory, reloadServerData
+        }}>
             <BrowserRouter>
                 <ServerDataLoader reloader={reloader} />
                 <Routes>
@@ -29,6 +33,7 @@ export default function App () {
                     <Route path="/cadastro" element={<SignUp />} />
                     <Route path="/habitos" element={<Habits />} />
                     <Route path="/hoje" element={<Today />} />
+                    <Route path="/historico" element={<History />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
