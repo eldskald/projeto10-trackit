@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 import UserContext from "../shared/UserContext";
 
@@ -22,24 +22,6 @@ export default function Menu () {
 
     return (
         <>
-            <CircContainer>
-                <div>
-                    <CircularProgressbarWithChildren
-                        value={getPercent()}
-                        background
-                        backgroundPadding={6}
-                        styles={buildStyles({
-                            backgroundColor: "var(--maincolor)",
-                            textColor: "var(--divcolor)",
-                            pathColor: "var(--divcolor)",
-                            strokeLinecap: "round",
-                            trailColor: "transparent"
-                        })}
-                    >
-                        <p onClick={() => navigate("/hoje")}>Hoje</p>
-                    </CircularProgressbarWithChildren>
-                </div>
-            </CircContainer>
             <Container>
                 <p onClick={() => navigate("/habitos")}>
                     Hábitos
@@ -48,6 +30,33 @@ export default function Menu () {
                     Histórico
                 </p>
             </Container>
+            <CircContainer>
+                <CircDiv>
+                    <CircularProgressbarWithChildren
+                        value={getPercent()}
+                        background
+                        backgroundPadding={6}
+
+                        styles={{
+                            root: {
+                                width: "92px"
+                            },
+                            path: {
+                                stroke: "var(--divcolor)",
+                                strokeLinecap: "round"
+                            },
+                            trail: {
+                                stroke: "transparent"
+                            },
+                            background: {
+                                fill: "var(--maincolor)"
+                            }
+                        }}
+                    >
+                        <p onClick={() => navigate("/hoje")}>Hoje</p>
+                    </CircularProgressbarWithChildren>
+                </CircDiv>
+            </CircContainer>
         </>
     );
 }
@@ -85,16 +94,6 @@ const CircContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    div {
-        width: 92px;
-        height: 92px;
-        z-index: 2;
-
-        background-color: var(--maincolor);
-        border: 1px solid transparent;
-        border-radius: 50%;
-    }
-
     p {
         margin-bottom: 8px;
 
@@ -103,4 +102,8 @@ const CircContainer = styled.div`
         font-size: 20px;
         cursor: pointer;
     }
+`;
+
+const CircDiv = styled.div`
+    z-index: 1;
 `;
