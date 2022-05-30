@@ -9,7 +9,7 @@ export default function Header () {
     const [menu, setMenu] = useState("");
 
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, setHabits, setToday, setHistory } = useContext(UserContext);
 
     function toggleMenu () {
         setMenu(menu ? "" : "menu");
@@ -18,6 +18,9 @@ export default function Header () {
     function logout () {
         localStorage.clear();
         setUser({});
+	setHabits([]);
+	setToday([]);
+	setHistory([]);
         navigate("/");
     }
 
